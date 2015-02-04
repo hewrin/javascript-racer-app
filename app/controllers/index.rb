@@ -1,3 +1,5 @@
+enable :sessions
+
 get '/' do
   # Look in app/views/index.erb
   erb :index
@@ -16,7 +18,8 @@ end
 post '/login' do
 	player1 = Player.where(name: params[:p1_name],password: params[:p1_password]).first
 	player2 = Player.where(name: params[:p2_name],password: params[:p2_password]).first
-
+	session[:id_1] = player1.id
+	session[:id_2] = player2.id
 
 	if player1 != nil && player2 != nil 	
 		Game.create(p1_id: player1.id,p2_id: player2.id,time_start: Time.now)
@@ -32,5 +35,11 @@ get '/game' do
 end
 
 post '/result' do
-	redirect to '/'
+	@winner = params[:winner]
+	{msg: @winner}.to_json
+end
+
+get '/result' do
+	@winner = params[:winner]
+  erb :result
 end
