@@ -22,7 +22,8 @@ post '/login' do
 	session[:id_2] = player2.id
 
 	if player1 != nil && player2 != nil 	
-		Game.create(p1_id: player1.id,p2_id: player2.id,time_start: Time.now)
+		game = Game.create(p1_id: player1.id,p2_id: player2.id,time_start: Time.now)
+		session[:game] =  game.id
 			redirect to '/game'
 	else
 			redirect to '/login'
@@ -41,5 +42,9 @@ end
 
 get '/result' do
 	@winner = params[:winner]
+	game_id = session[:game]
+	@game = Game.find(session[:game])
+	@game.update(time_end: Time.now)
+	@time = @game.time_end - @game.time_start
   erb :result
 end

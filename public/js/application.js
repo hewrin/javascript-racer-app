@@ -28,7 +28,7 @@ $(document).ready(function() {
       			})
 
       			result.done(function(message){
-      				window.location.href ='/result?winner=' + message["msg"]
+      				window.location.href ='/result?winner=' + message["msg"] + '&game=' + message["msg2"]
       			});
       	    };
 		};			
@@ -49,7 +49,7 @@ $(document).ready(function() {
 					data: {winner: 'Player 2'}
       			});
       			   finish.success(function(message){
-      			   	window.location.href = '/result?winner=' + message["msg"]
+      			   	window.location.href = '/result?winner=' + message["msg"] + '&game=' + message["msg2"]
       			   });
 
 			};
